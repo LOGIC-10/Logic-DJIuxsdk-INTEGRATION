@@ -22,6 +22,14 @@ import androidx.annotation.NonNull;
 
 import com.dji.mapkit.core.maps.DJIMap;
 import com.dji.mapkit.core.models.DJILatLng;
+import com.dji.ux.sample.battery.BatteryAttribute;
+import com.dji.ux.sample.battery.DoPost;
+import com.dji.ux.sample.battery.JsonHttp;
+import com.dji.ux.sample.battery.PushBattery;
+
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import dji.common.airlink.PhysicalSource;
 import dji.keysdk.CameraKey;
@@ -32,7 +40,6 @@ import dji.sdk.sdkmanager.LiveStreamManager;
 import dji.ux.widget.FPVWidget;
 import dji.ux.widget.MapWidget;
 import dji.ux.widget.controls.CameraControlsWidget;
-
 /**
  * Activity that shows all the UI elements together
  */
@@ -85,6 +92,23 @@ public class CompleteWidgetActivity extends Activity {
 
                         LiveState=1;
                         startLiveShowBtn.setBackground(getResources().getDrawable(R.drawable.live_button2));
+
+
+                        //doPost方法推送json格式电池数据至服务器,会闪退
+//                        DoPost doPost = new DoPost();
+//                        doPost.doPost();
+//                        Toast.makeText(CompleteWidgetActivity.this, "推送json格式至服务器成功！", Toast.LENGTH_SHORT).show();
+
+                        //PushBattery方法推送json格式电池数据至服务器,成功连接
+                        PushBattery pushBattery = new PushBattery();
+                        pushBattery.PushBatteryData();
+                        Toast.makeText(CompleteWidgetActivity.this, "推送json格式至服务器成功！", Toast.LENGTH_SHORT).show();
+
+//                        //PushJsonData方法推送json格式电池数据至服务器
+//                        JsonHttp jsonHttp = new JsonHttp();
+//                        jsonHttp.PushJsonData();
+//                        Toast.makeText(CompleteWidgetActivity.this, "推送json格式至服务器成功！", Toast.LENGTH_SHORT).show();
+
 
                     }else if(result==-1){
                         Toast.makeText(CompleteWidgetActivity.this, "异常！请检查网络连接状态！", Toast.LENGTH_SHORT).show();
@@ -157,6 +181,13 @@ public class CompleteWidgetActivity extends Activity {
             }
         });
         //直播推流功能结束
+
+
+//        //推送json格式电池数据至服务器
+//        PushBattery pushBattery = new PushBattery();
+//        pushBattery.PushBatteryData();
+
+//
 
 
         height = DensityUtil.dip2px(this, 100);
